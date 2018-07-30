@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
+<style>
+ul {
+  list-style-type: none;
+}
+</style>
   <title>list demo</title>
 </head>
 <body>
@@ -17,13 +22,31 @@
     var listView = Vue.component('list-view', {
      template: `
       <div>
-        <ol>
-          <li v-for="item in list">{{item}}</li>
-        </ol>
+        <input
+          v-model="filter"
+          type="text"></input>
+        <ul>
+          <li v-for="item in filteredList">{{item.index}}. {{item.order}}</li>
+        </ul>
       </div>
       `,
       data() {
-        return { list: orderList };
+        return {
+            list: orderList,
+            filter: '',
+        };
+      },
+      computed: {
+        filteredList() {
+            var orderedList = this.list.map((order, i) => {
+              return { index: i, order };
+            });
+            var myFilter = (i) => i;
+            if (this.filter !== '') {
+              myFilter = (i) => i.order.includes(this.filter);
+            }
+            return orderedList.filter(myFilter);
+        }
       }
     });
     new Vue({
