@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>list demo</title>
+</head>
+<body>
+  <div id="order-list"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script>
+    var orderList = [
+        '100004782', '100004783', '100004785 combined with 100004781', '100004784',
+        '100004786', '100004787', '100004788', '100004789', '100004790', '100004792',
+        '100004791', '100004793', '100004794', '100004795', '100004796',
+    ];
+    var listView = Vue.component('list-view', {
+     template: `
+      <div>
+        <ol>
+          <li v-for="item in list">{{item}}</li>
+        </ol>
+      </div>
+      `,
+      data() {
+        return { list: orderList };
+      }
+    });
+    new Vue({
+      el: '#order-list',
+      template: '<div><listView></listView></div>',
+      components: { listView }
+    });
+  </script>
+
+</body>
+</html>
